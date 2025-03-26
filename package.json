@@ -1,33 +1,35 @@
 {
-  "name": "decky-plugin-template",
-  "version": "0.0.1",
+  "name": "deck-crop-screenshots",
+  "version": "0.1.0",
   "description": "A template to quickly create decky plugins from scratch, based on TypeScript and webpack",
   "type": "module",
   "scripts": {
+    "prepare": "touch requirements.txt && pip3 install --upgrade --force-reinstall -r requirements.txt -t py_modules",
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SteamDeckHomebrew/decky-plugin-template.git"
+    "url": "git+https://github.com/Math-e/deck-crop-screenshots.git"
   },
   "keywords": [
     "decky",
     "plugin",
     "plugin-template",
     "steam-deck",
-    "deck"
+    "deck",
+    "screenshot"
   ],
-  "author": "You <you@you.tld>",
+  "author": "Matheus <matheus.limadasilva@outlook.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/SteamDeckHomebrew/decky-plugin-template/issues"
+    "url": "https://github.com/Math-e/deck-crop-screenshots/issues"
   },
-  "homepage": "https://github.com/SteamDeckHomebrew/decky-plugin-template#readme",
+  "homepage": "https://github.com/Math-e/deck-crop-screenshots#readme",
   "devDependencies": {
     "@decky/rollup": "^1.0.1",
-    "@decky/ui": "^4.7.2",
+    "@decky/ui": "^4.9.1",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/webpack": "^5.28.5",

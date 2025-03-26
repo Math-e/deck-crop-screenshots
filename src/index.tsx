@@ -2,7 +2,7 @@ import {
   ButtonItem,
   PanelSection,
   PanelSectionRow,
-  Navigation,
+  //Navigation,
   staticClasses
 } from "@decky/ui";
 import {
@@ -13,8 +13,9 @@ import {
   toaster,
   // routerHook
 } from "@decky/api"
+
 import { useState } from "react";
-import { FaShip } from "react-icons/fa";
+import { FaCropAlt } from "react-icons/fa";
 
 // import logo from "../assets/logo.png";
 
@@ -24,17 +25,31 @@ import { FaShip } from "react-icons/fa";
 //  the second one: number is for the return value
 const add = callable<[first: number, second: number], number>("add");
 
+//const cropGame = callable<[game: string], void>("cropGame");
+const cropTest = callable<[], boolean>("cropTest");
+
 // This function calls the python function "start_timer", which takes in no arguments and returns nothing.
 // It starts a (python) timer which eventually emits the event 'timer_event'
-const startTimer = callable<[], void>("start_timer");
 
 function Content() {
   const [result, setResult] = useState<number | undefined>();
+  
+  const [buttonEnabled, setButtonEnabled] = useState<boolean>(true);
+  const [feedbackText, setFeedbackText] = useState<string>("");
 
   const onClick = async () => {
     const result = await add(Math.random(), Math.random());
     setResult(result);
   };
+
+  const cropClick = async () => {
+    setButtonEnabled(false)
+    let res = await cropTest()
+    setFeedbackText(String(res))
+    setButtonEnabled(true)
+  };
+
+
 
   return (
     <PanelSection title="Panel Section">
@@ -46,32 +61,19 @@ function Content() {
           {result ?? "Add two numbers via Python"}
         </ButtonItem>
       </PanelSectionRow>
+
       <PanelSectionRow>
-        <ButtonItem
+      <ButtonItem
           layout="below"
-          onClick={() => startTimer()}
+          onClick={cropClick}
+          disabled={!buttonEnabled}
         >
-          {"Start Python timer"}
+          {"Crop screenshots"}
         </ButtonItem>
+
+        <div>{feedbackText}</div>
       </PanelSectionRow>
 
-      {/* <PanelSectionRow>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <img src={logo} />
-        </div>
-      </PanelSectionRow> */}
-
-      {/*<PanelSectionRow>
-        <ButtonItem
-          layout="below"
-          onClick={() => {
-            Navigation.Navigate("/decky-plugin-test");
-            Navigation.CloseSideMenus();
-          }}
-        >
-          Router
-        </ButtonItem>
-      </PanelSectionRow>*/}
     </PanelSection>
   );
 };
@@ -98,13 +100,13 @@ export default definePlugin(() => {
 
   return {
     // The name shown in various decky menus
-    name: "Test Plugin",
+    name: "Screenshot Cropper",
     // The element displayed at the top of your plugin's menu
-    titleView: <div className={staticClasses.Title}>Decky Example Plugin</div>,
+    titleView: <div className={staticClasses.Title}>Screenshot Cropper</div>,
     // The content of your plugin's menu
     content: <Content />,
     // The icon displayed in the plugin list
-    icon: <FaShip />,
+    icon: <FaCropAlt />,
     // The function triggered when your plugin unloads
     onDismount() {
       console.log("Unloading")
